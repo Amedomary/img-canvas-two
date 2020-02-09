@@ -24,40 +24,82 @@ canvas.height = innerHeight - 20;
 const ctx = canvas.getContext('2d');
 
 const mash = [];
-const radius = 2;
+const radius = 1;
 const imgStep = radius * 2 + 2;
+
+function getRandomArbitrary(min, max) {
+    return Math.random() * (max - min) + min;
+}
 
 class Dot {
     constructor(x, y, color) {
-        this.x = x;
-        this.y = y;
+        this._x = x;
+        this._y = y;
+        this.x = x + getRandomArbitrary(-300, 300);
+        this.y = y + getRandomArbitrary(-300, 300);
+        this._color = color;
         this.color = color;
         this.r = radius;
         this.state = 'passive';
         this.d = 0;
+        this.vX = getRandomArbitrary(1, 3);
+        this.vY = getRandomArbitrary(1, 3);
+        this.move = true;
     }
 
     checkPosition() {
-        // body
-        if (this.state === 'passive') {
-            if  (
-                Math.abs(mouseX - this.x) < this.r * 2
-                &&
-                Math.abs(mouseY - this.y) < this.r * 2
-            ) {
-                this._color = this.color;
-                this.color = 'red';
-                this.state = 'active';
+        if (this.move) {
+            let newX;
+            let newY;
+            const xIsOnPosition = Math.abs(this.x - this._x) < 3;
+            const yIsOnPosition = Math.abs(this.y - this._y) < 3;
+
+            if (xIsOnPosition) {
+                newX = this._x;
+            } else if (this.x > this._x) {
+                newX = this.x - this.vX;
+            } else if (this.x < this._x) {
+                newX = this.x + this.vX;
             }
-        } else {
-            if (this.d > 10) {
-                this.color = this._color;
-                this.state = 'passive';
-            } else {
-                this.d += 1;
+
+            if (yIsOnPosition) {
+                newY = this._y;
+            } else if (this.y > this._y) {
+                newY = this.y - this.vY;
+            } else if (this.y < this._y) {
+                newY = this.y + this.vY;
             }
+
+            if (xIsOnPosition && yIsOnPosition) {
+                this.move = false;
+            }
+
+            this.x = newX;
+            this.y = newY;
         }
     }
+
+
+    // checkColor() {
+    //     // body
+    //     if (this.state === 'passive') {
+    //         if  (
+    //             Math.abs(mouseX - this.x) < this.r * 2
+    //             &&
+    //             Math.abs(mouseY - this.y) < this.r * 2
+    //         ) {
+    //             this.color = 'red';
+    //             this.state = 'active';
+    //         }
+    //     } else {
+    //         if (this.d > 10) {
+    //             this.color = this._color;
+    //             this.state = 'passive';
+    //         } else {
+    //             this.d += 1;
+    //         }
+    //     }
+    // }
 
     reDraw() {
         ctx.fillStyle = this.color;
@@ -96,7 +138,7 @@ function createDataMash() {
                 pixelColor.g >= 20 ||
                 pixelColor.b >= 20
             ) {
-                mash.push(new Dot(x, y, color));
+                mash.push(new Dot(x + 200, y + 200, color));
             }
         }
     }
