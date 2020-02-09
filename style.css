@@ -1,5 +1,9 @@
 html {
-    background-color: #121212;
+    background-color: #000;
+}
+
+* {
+    margin: 0;
 }
 
 #stars {
