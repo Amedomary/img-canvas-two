@@ -40,8 +40,8 @@ const paddingTop = (canvas.width / 2) - (image.width / 2);
 const paddingLeft = (canvas.height / 2) - (image.height / 2);
 
 const mash = [];
-const radius = 1;
-const imgStep = radius * 2 + 2;
+const radius = 0.5;
+const imgStep = radius * 2;
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
@@ -123,9 +123,14 @@ class Dot {
 
     reDraw() {
         ctx.fillStyle = this.color;
-        ctx.beginPath();
-        ctx.arc(this.x - this.r, this.y - this.r, this.r, 0, 2 * Math.PI);
-        ctx.fill();
+
+        // circle
+        // ctx.beginPath();
+        // ctx.arc(this.x - this.r, this.y - this.r, this.r, 0, 2 * Math.PI);
+        // ctx.fill();
+
+        // rect
+        ctx.fillRect(this.x, this.y, radius*2, radius*2)
     }
 };
 
