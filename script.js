@@ -1,5 +1,13 @@
 'use strict';
 
+// stats
+var stats = new Stats();
+stats.setMode(0);
+stats.domElement.style.position = 'absolute';
+stats.domElement.style.left = '0px';
+stats.domElement.style.top = '0px';
+document.body.appendChild(stats.domElement);
+
 // MOUSE EVENT
 let mouseX = 0;
 let mouseY = 0;
@@ -38,10 +46,13 @@ const ctx = canvas.getContext('2d');
 
 const paddingTop = (canvas.width / 2) - (image.width / 2);
 const paddingLeft = (canvas.height / 2) - (image.height / 2);
+const centerW = canvas.width / 2;
+const centerH = canvas.height / 2;
 
 const mash = [];
-const radius = 0.5;
-const imgStep = radius * 2;
+let doneDots = 0;
+const radius = 1;
+const imgStep = radius * 2 + 2;
 
 function getRandomArbitrary(min, max) {
     return Math.random() * (max - min) + min;
@@ -66,8 +77,16 @@ class Dot {
     constructor(x, y, color) {
         this._x = x + paddingTop;
         this._y = y + paddingLeft;
-        this.x = getRandomArbitrary(0 - 100, canvas.width + 100);
-        this.y = getRandomArbitrary(0 - 100, canvas.height + 100);
+
+        this.x = getRandomArbitrary(0, canvas.width);
+        this._dx2 = Math.abs((centerW - this.x)) ** 2;
+        this._radius2 = ((canvas.width) / 2) ** 2;
+        this._dy = Math.sqrt(this._radius2 - this._dx2);
+
+        // this._d = Math.sqrt(((canvas.width) / 2) - (((canvas.width / 2) + this.x) ** 2));
+        this.y = getRandomArbitrary(centerH - this._dy, centerH + this._dy);
+        // this.y = getRandomArbitrary(0, canvas.height);
+
         this._color = color;
         this.color = color;
         this.r = radius;
@@ -76,6 +95,9 @@ class Dot {
         this.v = getRandomArbitrary(2, 5);
         this.move = true;
         this.angle = getAngle(this.x, this.y, this._x, this._y);
+
+        console.log(  );
+
     }
 
     checkPosition() {
@@ -89,16 +111,18 @@ class Dot {
                 newX = this._x;
                 newY = this._y;
                 this.move = false;
+                doneDots = doneDots + 1;
             } else {
                 newX = this.x - (this.v * this.angle.sin);
                 newY = this.y - (this.v * this.angle.cos);
             }
 
-            this.x = newX;
-            this.y = newY;
+            this.x = Math.fround(newX);
+            this.y = Math.fround(newY);
+
+
         }
     }
-
 
     // checkColor() {
     //     // body
@@ -130,7 +154,7 @@ class Dot {
         // ctx.fill();
 
         // rect
-        ctx.fillRect(this.x, this.y, radius*2, radius*2)
+        ctx.fillRect(this.x, this.y, radius * 2, radius * 2)
     }
 };
 
@@ -171,10 +195,21 @@ function draw() {
 };
 
 function renderLoop() {
-    draw();
-    // body
+    stats.begin();
 
-    requestAnimationFrame(renderLoop);
+
+    // body
+    draw();
+
+
+    stats.end();
+
+    if (doneDots !== mash.length) {
+        requestAnimationFrame(renderLoop);
+    }
 };
+
+
+
 
 createDataMash();
