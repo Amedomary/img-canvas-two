@@ -63,12 +63,19 @@ setTimeout(() => {
     const mash = [];
     let doneDots = 0;
     const dotSize = 2;
-    const imgStep = dotSize;
+    const imgStep = dotSize * 2;
     const blackBorder = 5;
     const speed = {
-        down: 10,
-        top: 15,
+        down: 1,
+        top: 5,
     }
+
+    // game loop
+    let last = performance.now();
+    const FPS = 60; // для движка
+    const STEP = 1 / FPS; // update should be called 60 times per second
+    let dt = 0;
+    let now;
 
     function getRandomArbitrary(min, max) {
         return Math.random() * (max - min) + min;
@@ -198,10 +205,15 @@ setTimeout(() => {
 
     function reDrawDots() {
         for (let i in mash) {
-            mash[i].checkPosition();
             mash[i].reDraw();
         }
     };
+
+    function reCalculateDot(params) {
+        for (let i in mash) {
+            mash[i].checkPosition();
+        }
+    }
 
     function draw() {
         ctx.clearRect(0, 0, canvas.width, canvas.height);
@@ -212,6 +224,18 @@ setTimeout(() => {
         stats.begin();
 
         // body
+        now = performance.now();
+        dt = dt + ((now - last) / 1000);
+
+        // пока дельта меньше шага не обновляем движок
+        while (dt > STEP) {
+            dt = dt - STEP;
+            reCalculateDot();
+          }
+        last = now;
+
+        // Рисуем по возможностям
+        // renderCharter(dt * FPS);
         draw();
 
         stats.end();
