@@ -55,6 +55,12 @@ setTimeout(() => {
     canvasStatic.height = canvas.height;
     const ctxStatic = canvasStatic.getContext('2d');
 
+    // Prerender canvas
+    const canvasPrerender = document.createElement("canvas");
+    canvasPrerender.width = canvas.width;
+    canvasPrerender.height = canvas.height;
+    const ctxPrerender = canvasPrerender.getContext("2d");
+
     const paddingTop = (canvas.width / 2) - (image.width / 2);
     const paddingLeft = (canvas.height / 2) - (image.height / 2);
     const centerW = canvas.width / 2;
@@ -62,12 +68,12 @@ setTimeout(() => {
 
     const mash = [];
     let doneDots = 0;
-    const dotSize = 2;
-    const imgStep = dotSize * 2;
+    const dotSize = 4;
+    const imgStep = dotSize;
     const blackBorder = 5;
     const speed = {
-        down: 1,
-        top: 5,
+        down: 4,
+        top: 6,
     }
 
     // game loop
@@ -133,8 +139,8 @@ setTimeout(() => {
                     this.move = false;
                     doneDots = doneDots + 1;
 
-                    ctxStatic.fillStyle = this.color;
-                    ctxStatic.fillRect(newX, newY, dotSize, dotSize);
+                    ctxPrerender.fillStyle = this.color;
+                    ctxPrerender.fillRect(newX, newY, dotSize, dotSize);
                 } else {
                     newX = this.x - (this.v * this.angle.sin);
                     newY = this.y - (this.v * this.angle.cos);
@@ -167,15 +173,15 @@ setTimeout(() => {
         // }
 
         reDraw() {
-            if (this.move) {
-                ctx.fillStyle = this.color;
+            // if (this.move) {
+                ctxPrerender.fillStyle = this.color;
                 // circle
-                // ctx.beginPath();
-                // ctx.arc(this.x - this.r, this.y - this.r, this.r, 0, 2 * Math.PI);
-                // ctx.fill();
+                // ctxPrerender.beginPath();
+                // ctxPrerender.arc(this.x - this.r, this.y - this.r, this.r, 0, 2 * Math.PI);
+                // ctxPrerender.fill();
                 // rect
-                ctx.fillRect(this.x, this.y, dotSize, dotSize);
-            }
+                ctxPrerender.fillRect(this.x, this.y, dotSize, dotSize);
+            // }
         }
     };
 
@@ -216,33 +222,71 @@ setTimeout(() => {
     }
 
     function draw() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctxPrerender.clearRect(0, 0, canvas.width, canvas.height);
         reDrawDots();
     };
+
+    const prerenderArr = [];
 
     function renderLoop() {
         stats.begin();
 
         // body
-        now = performance.now();
-        dt = dt + ((now - last) / 1000);
+        // now = performance.now();
+        // dt = dt + ((now - last) / 1000);
 
         // пока дельта меньше шага не обновляем движок
-        while (dt > STEP) {
-            dt = dt - STEP;
-            reCalculateDot();
-          }
-        last = now;
+        // while (dt > STEP) {
+        //     dt = dt - STEP;
+        //     reCalculateDot();
+        // }
+        // last = now;
 
         // Рисуем по возможностям
         // renderCharter(dt * FPS);
+
+        reCalculateDot();
         draw();
+
+        if (true) {
+            let blob;
+            canvasPrerender.toBlob((e) => {
+                blob = e;
+
+                const reader = new FileReader();
+                reader.readAsDataURL(blob); // конвертирует Blob в base64 и вызывает onload
+
+                reader.onload = function () {
+                    const image = document.createElement("img");
+                    image.src = reader.result;
+                    prerenderArr.push(image);
+                };
+            });
+        }
 
         stats.end();
         if (doneDots !== mash.length) {
             requestAnimationFrame(renderLoop);
+        } else {
+            console.log('finaly');
+            console.log(prerenderArr[20].src);
+
+            requestAnimationFrame(drowPreImg);
         }
     };
+
+    let i = 0;
+    function drowPreImg() {
+        stats.begin();
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        ctx.drawImage(prerenderArr[i], 0, 0);
+        i = i + 1;
+
+        if (i < prerenderArr.length) {
+            stats.end();
+            requestAnimationFrame(drowPreImg);
+        }
+    }
 
     createDataMash();
 }, 100);
