@@ -9,8 +9,8 @@ data:image/jpeg;base64,/9j/4RkyRXhpZgAATU0AKgAAAAgABwESAAMAAAABAAEAAAEaAAUAAAABA
 var stats = new Stats();
 stats.setMode(0);
 stats.domElement.style.position = 'absolute';
-stats.domElement.style.left = '0px';
-stats.domElement.style.top = '0px';
+stats.domElement.style.left = '-100px';
+stats.domElement.style.top = '-100px';
 document.body.appendChild(stats.domElement);
 
 const image = document.createElement("img");
@@ -58,8 +58,8 @@ setTimeout(() => {
 
     const mash = [];
     let doneDots = 0;
-    const dotSize = 2;
-    const imgStep = dotSize + 2;
+    const dotSize = 1;
+    const imgStep = dotSize;
     const blackBorder = 24;
     const speed = {
         down: 0.5,

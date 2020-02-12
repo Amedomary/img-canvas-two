@@ -130,7 +130,7 @@
 
 .solo-left-n1 {
   animation-name: solo_n1_hor;
-  animation-duration: 12s;
+  animation-duration: 9s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
 }
@@ -157,7 +157,7 @@
 }
 .solo-right-n2 {
   animation-name: solo_n2_hor;
-  animation-duration: 15s;
+  animation-duration: 10s;
   animation-fill-mode: both;
   animation-timing-function: ease-in-out;
 }

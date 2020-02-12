@@ -57,7 +57,7 @@ html::-webkit-scrollbar-thumb {
   display: inline-block;
   cursor: pointer;
   position: absolute;
-  top: calc(100vh - 200px);
+  bottom: 80px;
   z-index: 5;
   left: calc(50% - 64px);
 
@@ -65,7 +65,7 @@ html::-webkit-scrollbar-thumb {
   animation-duration: 2s;
   transform-origin: top;
   animation-fill-mode: both;
-  animation-delay: 10s;
+  animation-delay: 11s;
 }
 
 .button:hover rect {
