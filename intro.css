@@ -1,0 +1,274 @@
+.logo {
+  position: fixed;
+  left: 32px;
+  top: 32px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 18px;
+  line-height: 21px;
+  color: #fff;
+}
+
+.lang {
+  position: fixed;
+  right: 32px;
+  top: 32px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: bold;
+  font-size: 14px;
+  color: #fff;
+}
+
+.an-container {
+  font-size: 0;
+  margin: 0 auto;
+  height: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.gap {
+  display: inline-block;
+  width: 1px;
+  height: 100%;
+  background-color: #000;
+  flex: 0 0 auto;
+}
+
+.mask-rect {
+  position: relative;
+  display: inline-block;
+  width: 319px;
+  height: 100%;
+  overflow: hidden;
+  flex: 0 0 auto;
+  transition: 0.1s;
+}
+
+.left-rect {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.right-rect {
+  position: relative;
+  overflow: hidden;
+  flex: 1 1 auto;
+}
+
+.name {
+  position: absolute;
+  top: 0;
+  margin: 0;
+  text-transform: uppercase;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 900;
+  font-size: 120px;
+  line-height: 234px;
+
+  /* Blue */
+  color: #0275ff;
+}
+.r1 {
+  left: 15px;
+}
+.r2 {
+  left: -309px;
+}
+
+.r3 {
+  left: -626px;
+}
+
+.n1 {
+  animation-name: n1_hor;
+  animation-duration: 5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+.n2 {
+  animation-name: n2_hor;
+  animation-delay: 0.5s;
+  animation-duration: 5s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+:root {
+  --top_n1: 50px;
+  --top_n2: 420px;
+}
+
+.n1.r1 {
+  top: calc(var(--top_n1) + 10px);
+}
+.n1.r2 {
+  top: calc(var(--top_n1) - 10px);
+}
+.n1.r3 {
+  top: calc(var(--top_n1) + 0px);
+}
+
+.n2 {
+  top: 200px;
+}
+
+.n2.r1 {
+  top: calc(var(--top_n2) - 40px);
+}
+.n2.r2 {
+  top: calc(var(--top_n2) - 25px);
+}
+.n2.r3 {
+  top: calc(var(--top_n2) - 32px);
+}
+
+.solo-left-n1 {
+  animation-name: solo_n1_hor;
+  animation-duration: 12s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+.solo-right-n1 {
+  animation-name: solo_n1_hor;
+  animation-duration: 8s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+.solo-left-n1 {
+  top: calc(var(--top_n1) + 110px);
+}
+
+.solo-left-n1 {
+  top: calc(var(--top_n1) + 320px);
+}
+
+.solo-left-n2 {
+  animation-name: solo_n2_hor;
+  animation-duration: 10s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+.solo-right-n2 {
+  animation-name: solo_n2_hor;
+  animation-duration: 15s;
+  animation-fill-mode: both;
+  animation-timing-function: ease-in-out;
+}
+
+.solo-right-n1 {
+  top: calc(var(--top_n1) + 310px);
+}
+
+.solo-right-n2 {
+  top: calc(var(--top_n2) - 300px);
+}
+
+@keyframes n1_hor {
+  0% {
+    transform: translateX(-700px);
+  }
+  45% {
+    transform: translateX(1010px);
+  }
+  55% {
+    transform: translateX(1010px) translateY(100px);
+  }
+  100% {
+    transform: translateX(110px) translateY(100px);
+  }
+}
+
+@keyframes n2_hor {
+  0% {
+    transform: translateX(1010px);
+  }
+  45% {
+    transform: translateX(-610px);
+  }
+
+  55% {
+    transform: translateX(-610px) translateY(-100px);
+  }
+
+  100% {
+    transform: translateX(168px) translateY(-100px);
+  }
+}
+
+@keyframes solo_n1_hor {
+  0% {
+    transform: translateX(-700px);
+  }
+  45% {
+    transform: translateX(1010px);
+  }
+  55% {
+    transform: translateX(1010px) translateY(-20px);
+  }
+  100% {
+    transform: translateX(-700px) translateY(-20px);
+  }
+}
+
+@keyframes solo_n2_hor {
+  0% {
+    transform: translateX(1010px);
+  }
+  45% {
+    transform: translateX(-610px);
+  }
+
+  55% {
+    transform: translateX(-610px) translateY(+20px);
+  }
+
+  100% {
+    transform: translateX(1010px) translateY(+20px);
+  }
+}
+
+.subtext {
+  position: absolute;
+  right: 10px;
+  font-family: Roboto;
+  font-style: normal;
+  font-weight: 300;
+  font-size: 23px;
+  line-height: 27px;
+  /* identical to box height */
+  text-transform: uppercase;
+  color: #ffffff;
+  animation-name: fadeIn;
+  animation-duration: 1s;
+  transform-origin: top;
+  animation-fill-mode: both;
+}
+
+.s1 {
+  top: 490px;
+  animation-delay: 6s;
+}
+.s2 {
+  top: 520px;
+  animation-delay: 7.5s;
+
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-15px) scaleY(0);
+  }
+
+  to {
+    opacity: 1;
+    transform: none;
+  }
+}
