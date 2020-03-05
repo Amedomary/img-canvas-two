@@ -29,19 +29,15 @@ async function main() {
 	}
 
 	{
-		let lastTs = 0;
-		let framesDrawn = 0;
+		fpsInput.value = partCount + ' dots';
 
 		const drawFrame = (timestamp) => {
+			stats.begin();
+
 			tick(particlesCount);
 			render(getData(), particlesCount, canvasWidth, canvasHeight);
 
-			framesDrawn++;
-			if (timestamp > lastTs + 2000) {
-				fpsInput.value = (1000 * framesDrawn / (timestamp - lastTs)).toFixed(1) + ' FPS; ' + partCount + ' dots';
-				lastTs = timestamp;
-				framesDrawn = 0;
-			}
+			stats.end();
 			requestAnimationFrame(drawFrame);
 		}
 		requestAnimationFrame(drawFrame);

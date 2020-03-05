@@ -13,6 +13,6 @@ void main() {
 		0,
 		1
 	);
-	gl_PointSize = 1.0;
+	gl_PointSize = 2.0;
 	vColor = aColor;
 }

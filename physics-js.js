@@ -32,7 +32,7 @@ export async function initPhysics() {
 	const centerH = canvas.height / 2;
 
 	const mash = [];
-	const dotSize = 1;
+	const dotSize = 2;
 	const imgStep = dotSize * 1;
 	const speed = {
 		down: 2,
