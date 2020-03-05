@@ -2,9 +2,15 @@ import { initPhysics } from './physics-js.js';
 import { initRenderer } from './renderer-webgl.js';
 
 async function main() {
+	var stats = new Stats();
+	stats.setMode(0);
+	stats.domElement.style.position = 'absolute';
+	stats.domElement.style.left = '0px';
+	stats.domElement.style.top = '0px';
+	document.body.appendChild(stats.domElement);
+
 	const canvas = document.querySelector('#webgl');
 	const fpsInput = document.querySelector('#fps');
-
 
 	const { getData, tick, partCount } = await initPhysics();
 	const { render } = await initRenderer(canvas);

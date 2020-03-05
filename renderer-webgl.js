@@ -29,14 +29,26 @@ export async function initRenderer(canvas) {
 
 	{
 		const attribLocation = gl.getAttribLocation(program, 'coord');
+		const color = gl.getAttribLocation(program, 'aColor');
+
 		gl.enableVertexAttribArray(attribLocation);
+		gl.enableVertexAttribArray(color);
+
 		gl.vertexAttribPointer(
 			attribLocation, // index
 			2, // size (X and Y)
 			gl.FLOAT, // float32 each
 			false, // normalized. Has no effect on float
-			16, // stride
+			28, // stride
 			0 // start index
+		);
+		gl.vertexAttribPointer(
+			color, // index
+			3, // size (X and Y)
+			gl.FLOAT, // float32 each
+			false, // normalized. Has no effect on float
+			28, // stride
+			16 // start index
 		);
 	}
 
@@ -53,7 +65,7 @@ export async function initRenderer(canvas) {
 			}
 		}
 
-		gl.bufferData(gl.ARRAY_BUFFER, data.subarray(0, count * 4), gl.DYNAMIC_DRAW);
+		gl.bufferData(gl.ARRAY_BUFFER, data.subarray(0, count * 7), gl.DYNAMIC_DRAW);
 		gl.clear(gl.COLOR_BUFFER_BIT);
 		gl.drawArrays(gl.POINTS, 0, count);
 	}
